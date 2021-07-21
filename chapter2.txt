@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-You are in new branch now. And now master. What happened here
-=======
-I am now in new-branch
->>>>>>> new-branch
+You are in new branch now. And now master. What happened here. even nerds kalmistik
