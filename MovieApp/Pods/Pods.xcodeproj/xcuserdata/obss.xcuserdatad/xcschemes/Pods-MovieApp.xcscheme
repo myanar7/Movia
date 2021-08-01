@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3809A0DF0EE0A64F2787C6DDDB016158"
-               BuildableName = "Pods-MovieApp.framework"
+               BuildableName = "Pods_MovieApp.framework"
                BlueprintName = "Pods-MovieApp"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>

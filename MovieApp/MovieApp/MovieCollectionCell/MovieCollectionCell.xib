@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MovieCollectionCell" id="gTV-IL-0wX" customClass="MovieCollectionCell" customModule="MovieApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="184" height="352"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="184" height="352"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rOU-4k-fSU">
+                        <rect key="frame" x="0.0" y="0.0" width="184" height="352"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LotrImage" translatesAutoresizingMaskIntoConstraints="NO" id="rlU-Da-KVz">
+                                <rect key="frame" x="0.0" y="0.0" width="184" height="352"/>
+                            </imageView>
+                            <view alpha="0.40000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P6f-Dn-HB2">
+                                <rect key="frame" x="0.0" y="246.5" width="184" height="105.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The Lord Of Rings" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="Ce3-cV-WMD">
+                                        <rect key="frame" x="0.0" y="0.0" width="184" height="105.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.12984204290000001" green="0.12984612579999999" blue="0.12984395030000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="Ce3-cV-WMD" secondAttribute="bottom" id="QYT-jj-Tvi"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ce3-cV-WMD" secondAttribute="trailing" id="ifw-Wz-0Vd"/>
+                                    <constraint firstItem="Ce3-cV-WMD" firstAttribute="top" secondItem="P6f-Dn-HB2" secondAttribute="top" id="ju5-HV-qIB"/>
+                                    <constraint firstItem="Ce3-cV-WMD" firstAttribute="leading" secondItem="P6f-Dn-HB2" secondAttribute="leading" id="oFl-3m-jUL"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemGreenColor"/>
+                        <constraints>
+                            <constraint firstItem="P6f-Dn-HB2" firstAttribute="leading" secondItem="rOU-4k-fSU" secondAttribute="leading" id="0G4-7A-R9c"/>
+                            <constraint firstAttribute="bottom" secondItem="rlU-Da-KVz" secondAttribute="bottom" id="KNL-oA-5ig"/>
+                            <constraint firstItem="P6f-Dn-HB2" firstAttribute="height" secondItem="rlU-Da-KVz" secondAttribute="height" multiplier="0.3" id="Kax-uh-xuH"/>
+                            <constraint firstItem="rlU-Da-KVz" firstAttribute="top" secondItem="rOU-4k-fSU" secondAttribute="top" id="V3Q-B1-1CJ"/>
+                            <constraint firstAttribute="bottom" secondItem="P6f-Dn-HB2" secondAttribute="bottom" id="Vcb-rO-MiQ"/>
+                            <constraint firstAttribute="trailing" secondItem="rlU-Da-KVz" secondAttribute="trailing" id="XuO-Js-573"/>
+                            <constraint firstAttribute="trailing" secondItem="P6f-Dn-HB2" secondAttribute="trailing" id="sSu-U9-nsz"/>
+                            <constraint firstItem="rlU-Da-KVz" firstAttribute="leading" secondItem="rOU-4k-fSU" secondAttribute="leading" id="xAZ-zp-ymC"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="rOU-4k-fSU" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="7Pq-Hw-1A3"/>
+                <constraint firstAttribute="trailing" secondItem="rOU-4k-fSU" secondAttribute="trailing" id="GkQ-li-7Ei"/>
+                <constraint firstItem="rOU-4k-fSU" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="oC5-Kw-4ly"/>
+                <constraint firstAttribute="bottom" secondItem="rOU-4k-fSU" secondAttribute="bottom" id="xjl-dD-e1A"/>
+            </constraints>
+            <size key="customSize" width="181" height="352"/>
+            <connections>
+                <outlet property="imageView" destination="rlU-Da-KVz" id="uoi-K4-UVQ"/>
+                <outlet property="movieTitle" destination="Ce3-cV-WMD" id="tYv-jl-vjR"/>
+            </connections>
+            <point key="canvasLocation" x="201.44927536231884" y="132.58928571428572"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="LotrImage" width="187.5" height="187.5"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
