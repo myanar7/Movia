@@ -11,6 +11,7 @@ struct Constants{
     
     struct Network {
         static let apiKey = "71d98b08f7e35fae8bdf6f14d6c2f67d"
+        static let searchingParameter = ""
     }
     struct AppInfo {
         static let appName = "Mutflix"

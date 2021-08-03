@@ -12,26 +12,20 @@ class MovieCollectionCell: UICollectionViewCell {
     
     @IBOutlet weak var movieTitle: UILabel!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var outerCardView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        outerCardView.layer.cornerRadius = outerCardView.frame.width/5
         // Initialization code
     }
     func configure(title : String?, posterPath: String?){
         if let safeTitle = title {
             movieTitle.text = safeTitle
-            guard let url = URL.init(string: "https://image.tmdb.org/t/p/w500\(posterPath!))") else {
-                return
-            }
-            let resource = ImageResource(downloadURL: url)
-            
-            KingfisherManager.shared.retrieveImage(with : resource) { result in
-                switch result {
-                case .success(let value):
-                        self.imageView.image = value.image
-                case .failure(let error):
-                    print("Error: \(error)")
-                }
+            if posterPath == nil {
+                
+            }else{
+                imageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/original\(posterPath!)"),placeholder: UIImage(named: "LotrImage"))
             }
         }
     }

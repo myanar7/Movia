@@ -17,7 +17,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="184" height="352"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rOU-4k-fSU">
+                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rOU-4k-fSU">
                         <rect key="frame" x="0.0" y="0.0" width="184" height="352"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LotrImage" translatesAutoresizingMaskIntoConstraints="NO" id="rlU-Da-KVz">
@@ -67,6 +67,7 @@
             <connections>
                 <outlet property="imageView" destination="rlU-Da-KVz" id="uoi-K4-UVQ"/>
                 <outlet property="movieTitle" destination="Ce3-cV-WMD" id="tYv-jl-vjR"/>
+                <outlet property="outerCardView" destination="rOU-4k-fSU" id="uGg-Po-erA"/>
             </connections>
             <point key="canvasLocation" x="201.44927536231884" y="132.58928571428572"/>
         </collectionViewCell>

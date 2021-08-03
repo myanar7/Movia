@@ -34,12 +34,32 @@ class ViewController: UIViewController{
         searchField.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
         collectionView.backgroundColor = UIColor(patternImage: UIImage())
         collectionView.dataSource = self
+        searchField.searchTextField.delegate = self
         collectionView.delegate = self
+        collectionView.prefetchDataSource = self
         collectionView.register(UINib(nibName: Constants.Nibs.movieCollectionCell, bundle: nil), forCellWithReuseIdentifier: Constants.Nibs.movieCollectionCell)
         collectionView.setCollectionViewLayout(UICollectionViewFlowLayout(), animated: true)
     }
 }
-extension ViewController : UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout{
+extension ViewController : UISearchTextFieldDelegate{
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        MovieNetwork.shared.fetchMovies(with: "search/movie", query: textField.text) { (movie) in
+            print(movie.results?.first)
+            self.populerMovies = movie.results ?? []
+            self.collectionView.reloadData()
+        }
+    }
+}
+extension ViewController : UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UICollectionViewDataSourcePrefetching{
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        print(indexPaths.first?.row)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return populerMovies.count
     }
@@ -50,6 +70,9 @@ extension ViewController : UICollectionViewDataSource,UICollectionViewDelegate,U
         cell.configure(title: data.title, posterPath: data.posterPath)
         return cell
     }
+    
+    
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
