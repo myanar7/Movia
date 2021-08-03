@@ -7,7 +7,10 @@
 
 import UIKit
 
-class ViewController: UIViewController{
+class StoredViewController: UIViewController, UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        print(scrollView.contentOffset.x / scrollView.frame.size.width)
+    }
 
     var populerMovies: [Result] = []
 
@@ -41,7 +44,7 @@ class ViewController: UIViewController{
         collectionView.setCollectionViewLayout(UICollectionViewFlowLayout(), animated: true)
     }
 }
-extension ViewController: UISearchTextFieldDelegate {
+extension StoredViewController: UISearchTextFieldDelegate {
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -55,7 +58,7 @@ extension ViewController: UISearchTextFieldDelegate {
         }
     }
 }
-extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSourcePrefetching {
+extension StoredViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
 
     }
