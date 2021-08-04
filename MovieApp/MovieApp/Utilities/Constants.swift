@@ -25,4 +25,7 @@ struct Constants {
         static let titleColor = "titleColor"
         static let barColor = "barColor"
     }
+    struct Routes {
+        static let detailsPage = "DetailsViewController"
+    }
 }
