@@ -83,7 +83,8 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
         let detailsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: Constants.Routes.detailsPage) as! DetailsViewController
         detailsVC.imageCell = cell.imageView.image
         detailsVC.titleCell = cell.movieTitle.text
-        navigationController?.pushViewController(detailsVC, animated: true)
+        present(detailsVC, animated: true)
+        //navigationController?.pushViewController(detailsVC, animated: true)
     }
 
     func collectionView(_ collectionView: UICollectionView,
