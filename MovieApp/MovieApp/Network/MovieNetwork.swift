@@ -14,21 +14,19 @@ struct MovieNetwork {
 
     let baseUrl = "https://api.themoviedb.org/3/"
 
-    func fetchMovies(with type: String = "movie/popular", query: String? = nil, completion : @escaping (Movie) -> Void) {
+    func fetchMovies<T>(with type: String = "movie/popular", query: String? = nil, model: T.Type, completion : @escaping (T) -> Void) where T: Decodable {
         var apiParameter = ["api_key": Constants.Network.apiKey]
         if query != nil {apiParameter["query"] = query}
         AF.request("\(baseUrl)\(type)?", parameters: apiParameter).response { (response) in
-            print(response.request?.url)
             if response.error == nil, let safeData = response.data {
                 do {
-                    let decodedData = try JSONDecoder().decode(Movie.self, from: safeData)
+                    let decodedData = try JSONDecoder().decode(model, from: safeData)
                     completion(decodedData)
                 } catch {
                     print(error.localizedDescription)
                 }
 
             }
-
         }
     }
 }

@@ -17,7 +17,7 @@ class ViewController: UIViewController {
             cellHeight = collectionView.frame.height/3
         }
     }
-    var cellHeight : CGFloat = 0.0
+    var cellHeight: CGFloat = 0.0
     
     @IBOutlet weak var searchField: UISearchBar!
 
@@ -27,7 +27,7 @@ class ViewController: UIViewController {
         getMovies()
     }
     func getMovies() {
-        MovieNetwork.shared.fetchMovies { (data) in
+        MovieNetwork.shared.fetchMovies(model: Movie.self) { (data) in
 
             if let movies = data.results {
                 self.populerMovies = movies
@@ -52,7 +52,7 @@ extension ViewController: UISearchTextFieldDelegate {
         return true
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
-        MovieNetwork.shared.fetchMovies(with: "search/movie", query: textField.text) { (movie) in
+        MovieNetwork.shared.fetchMovies(with: "search/movie", query: textField.text, model: Movie.self) { (movie) in
             self.populerMovies = movie.results ?? []
             self.collectionView.reloadData()
         }
@@ -61,7 +61,7 @@ extension ViewController: UISearchTextFieldDelegate {
 extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let scrollOffset = scrollView.contentOffset.y
-        if scrollOffset < cellHeight+10,scrollView.contentOffset.y > cellHeight-10 || scrollOffset == 0.0{
+        if scrollOffset < cellHeight+10, scrollView.contentOffset.y > cellHeight-10 || scrollOffset == 0.0 {
             self.contentViewTopConstaint.constant =  -scrollView.contentOffset.y
             UIView.animate(withDuration: 3.0) {
                 self.view.layoutIfNeeded()
@@ -83,14 +83,15 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
         let detailsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: Constants.Routes.detailsPage) as! DetailsViewController
         detailsVC.imageCell = cell.imageView.image
         detailsVC.titleCell = cell.movieTitle.text
-        present(detailsVC, animated: true)
-        //navigationController?.pushViewController(detailsVC, animated: true)
+        detailsVC.movieID = populerMovies[indexPath.row].movieID
+        //present(detailsVC, animated: true)
+        navigationController?.pushViewController(detailsVC, animated: true)
     }
 
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width*0.31, height: collectionView.frame.height/3)
+        return CGSize(width: collectionView.frame.width*0.46, height: collectionView.frame.height/3)
     }
 
     func collectionView(_ collectionView: UICollectionView,
@@ -102,6 +103,6 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
     func collectionView(_ collectionView: UICollectionView, layout
                             collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 1.0
+        return view.frame.height/40.0
     }
 }
