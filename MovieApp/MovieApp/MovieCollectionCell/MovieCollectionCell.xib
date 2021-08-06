@@ -48,14 +48,44 @@
                                     <constraint firstAttribute="width" secondItem="qwO-VV-4Xn" secondAttribute="height" multiplier="1:1" id="e6i-98-JoH"/>
                                 </constraints>
                             </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YwE-KZ-G9f">
+                                <rect key="frame" x="0.0" y="0.0" width="44.5" height="55.5"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="apv-sK-NSa">
+                                        <rect key="frame" x="8" y="-0.5" width="28.5" height="29"/>
+                                        <color key="tintColor" systemColor="systemYellowColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="apv-sK-NSa" secondAttribute="height" multiplier="40:41" id="TNu-sX-dVe"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="oa0-Rk-lh6">
+                                        <rect key="frame" x="0.0" y="37.5" width="44.5" height="18"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="YwE-KZ-G9f" secondAttribute="height" multiplier="12:15" id="2vB-ET-o68"/>
+                                    <constraint firstItem="apv-sK-NSa" firstAttribute="top" secondItem="YwE-KZ-G9f" secondAttribute="top" id="3LT-KT-k1t"/>
+                                    <constraint firstItem="oa0-Rk-lh6" firstAttribute="leading" secondItem="YwE-KZ-G9f" secondAttribute="leading" id="JXL-ze-jyS"/>
+                                    <constraint firstAttribute="trailing" secondItem="oa0-Rk-lh6" secondAttribute="trailing" id="RmD-m3-bEd"/>
+                                    <constraint firstItem="apv-sK-NSa" firstAttribute="centerX" secondItem="YwE-KZ-G9f" secondAttribute="centerX" id="dxJ-mE-uGz"/>
+                                    <constraint firstItem="apv-sK-NSa" firstAttribute="leading" secondItem="YwE-KZ-G9f" secondAttribute="leading" constant="8" id="dyf-7Z-dBn"/>
+                                    <constraint firstAttribute="bottom" secondItem="oa0-Rk-lh6" secondAttribute="bottom" id="gTB-e9-DBr"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemGreenColor"/>
                         <constraints>
                             <constraint firstItem="P6f-Dn-HB2" firstAttribute="leading" secondItem="rOU-4k-fSU" secondAttribute="leading" id="0G4-7A-R9c"/>
+                            <constraint firstItem="YwE-KZ-G9f" firstAttribute="leading" secondItem="rOU-4k-fSU" secondAttribute="leading" id="6vn-L0-9gO"/>
                             <constraint firstAttribute="trailing" secondItem="qwO-VV-4Xn" secondAttribute="trailing" id="UGZ-nF-a8T"/>
                             <constraint firstItem="rlU-Da-KVz" firstAttribute="top" secondItem="rOU-4k-fSU" secondAttribute="top" id="V3Q-B1-1CJ"/>
                             <constraint firstAttribute="bottom" secondItem="P6f-Dn-HB2" secondAttribute="bottom" id="Vcb-rO-MiQ"/>
                             <constraint firstItem="qwO-VV-4Xn" firstAttribute="height" secondItem="rlU-Da-KVz" secondAttribute="height" multiplier="0.2" id="WiG-BD-4Vu"/>
+                            <constraint firstItem="YwE-KZ-G9f" firstAttribute="top" secondItem="rOU-4k-fSU" secondAttribute="top" id="WnV-nr-mO0"/>
                             <constraint firstAttribute="trailing" secondItem="rlU-Da-KVz" secondAttribute="trailing" id="XuO-Js-573"/>
                             <constraint firstItem="P6f-Dn-HB2" firstAttribute="top" secondItem="rlU-Da-KVz" secondAttribute="bottom" id="fec-bC-yjL"/>
                             <constraint firstItem="qwO-VV-4Xn" firstAttribute="top" secondItem="rOU-4k-fSU" secondAttribute="top" id="gWX-Ni-hIv"/>
@@ -69,13 +99,17 @@
             <constraints>
                 <constraint firstItem="rOU-4k-fSU" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="7Pq-Hw-1A3"/>
                 <constraint firstAttribute="trailing" secondItem="rOU-4k-fSU" secondAttribute="trailing" id="GkQ-li-7Ei"/>
+                <constraint firstItem="YwE-KZ-G9f" firstAttribute="height" secondItem="rlU-Da-KVz" secondAttribute="height" multiplier="0.2" id="X1x-nu-Xc9"/>
                 <constraint firstItem="rlU-Da-KVz" firstAttribute="height" secondItem="ZTg-uK-7eu" secondAttribute="height" multiplier="0.9" id="kQc-m5-ltQ"/>
                 <constraint firstItem="rOU-4k-fSU" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="oC5-Kw-4ly"/>
                 <constraint firstAttribute="bottom" secondItem="rOU-4k-fSU" secondAttribute="bottom" id="xjl-dD-e1A"/>
             </constraints>
             <size key="customSize" width="181" height="352"/>
             <connections>
+                <outlet property="favoriteIcon" destination="qwO-VV-4Xn" id="8dp-57-ivE"/>
                 <outlet property="imageView" destination="rlU-Da-KVz" id="uoi-K4-UVQ"/>
+                <outlet property="imdbBackground" destination="YwE-KZ-G9f" id="W61-D1-Dpe"/>
+                <outlet property="imdbScore" destination="oa0-Rk-lh6" id="Zj2-aT-WVG"/>
                 <outlet property="movieTitle" destination="Ce3-cV-WMD" id="tYv-jl-vjR"/>
                 <outlet property="outerCardView" destination="rOU-4k-fSU" id="uGg-Po-erA"/>
             </connections>
@@ -84,11 +118,15 @@
     </objects>
     <resources>
         <image name="LotrImage" width="187.5" height="187.5"/>
+        <image name="star.fill" catalog="system" width="128" height="116"/>
         <namedColor name="barColor">
             <color red="0.31999999284744263" green="0.36500000953674316" blue="0.38499999046325684" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

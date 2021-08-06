@@ -12,14 +12,14 @@ struct Movie: Decodable {
 }
 struct Result: Codable {
     let title: String?
-    let releaseDate: String?
     let posterPath: String?
+    let imdbScore: Double?
     let movieID: Int?
 
     enum CodingKeys: String, CodingKey {
         case title
+        case imdbScore = "vote_average"
         case movieID = "id"
-        case releaseDate = "release_date"
         case posterPath = "poster_path"
     }
 }

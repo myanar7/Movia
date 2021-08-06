@@ -75,7 +75,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.Nibs.movieCollectionCell, for: indexPath) as! MovieCollectionCell
         let data = populerMovies[indexPath.row]
-        cell.configure(title: data.title, posterPath: data.posterPath)
+        cell.configure(title: data.title, posterPath: data.posterPath, imdb: data.imdbScore)
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

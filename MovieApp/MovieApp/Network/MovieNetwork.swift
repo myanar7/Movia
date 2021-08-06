@@ -18,6 +18,7 @@ struct MovieNetwork {
         var apiParameter = ["api_key": Constants.Network.apiKey]
         if query != nil {apiParameter["query"] = query}
         AF.request("\(baseUrl)\(type)?", parameters: apiParameter).response { (response) in
+            
             if response.error == nil, let safeData = response.data {
                 do {
                     let decodedData = try JSONDecoder().decode(model, from: safeData)

@@ -23,9 +23,14 @@ class DetailsViewController: UIViewController {
             MovieNetwork.shared.fetchMovies(with: "movie/\(safeID)", model: Detail.self) { (detail) in
                 self.overviewLabel.text = detail.overview
                 self.imdbLabel.text = detail.releaseDate
+                MovieNetwork.shared.fetchMovies(with: "movie/\(safeID)/videos", model: Trailer.self) { (trailer) in
+                    if let safeKey = trailer.results?.first?.videoKey{
+                        self.youtubePlayer.load(withVideoId: safeKey)
+                    }
+                }
             }
         }
-        youtubePlayer.load(withVideoId: "lV4YY5EIFOI")
+        //youtubePlayer.load(withVideoId: "lV4YY5EIFOI")
         imageMovie.image = imageCell
         titleLabel.text = titleCell
         navigationController?.navigationBar.isHidden = false
