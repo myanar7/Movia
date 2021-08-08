@@ -7,32 +7,38 @@
 
 import UIKit
 import youtube_ios_player_helper
+import Kingfisher
 
 class DetailsViewController: UIViewController {
-    @IBOutlet weak var imdbLabel: UILabel!
+    @IBOutlet weak var relaseLabel: UILabel!
     @IBOutlet weak var overviewLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var youtubePlayer: YTPlayerView!
+    @IBOutlet weak var imdbLabel: UILabel!
     @IBOutlet weak var imageMovie: UIImageView!
-    var imageCell: UIImage?
-    var titleCell: String?
+    @IBOutlet weak var imdbView: UIView!
+    @IBOutlet weak var backgroundImage: UIImageView!
     var movieID: Int?
+//    var detailInfo: Detail?
     override func viewDidLoad() {
         super.viewDidLoad()
+        imageMovie.layer.cornerRadius = 10.0
+        imdbView.layer.cornerRadius = 10.0
         if let safeID = movieID {
             MovieNetwork.shared.fetchMovies(with: "movie/\(safeID)", model: Detail.self) { (detail) in
-                self.overviewLabel.text = detail.overview
-                self.imdbLabel.text = detail.releaseDate
+                self.imdbLabel.text = String(describing: detail.imdbScore ?? 0.0)
+                self.overviewLabel.text = detail.overview ?? ""
+                self.relaseLabel.text = "Relase Date: \(detail.releaseDate ?? "")"
+                self.imageMovie.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/original\(detail.posterPath ?? "")"), placeholder: UIImage(named: "LotrImage"))
+                self.titleLabel.text = "Title: \(detail.title ?? "")"
+                self.backgroundImage.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/original\(detail.backdrop ?? "")"))
                 MovieNetwork.shared.fetchMovies(with: "movie/\(safeID)/videos", model: Trailer.self) { (trailer) in
-                    if let safeKey = trailer.results?.first?.videoKey{
+                    if let safeKey = trailer.results?.first?.videoKey {
                         self.youtubePlayer.load(withVideoId: safeKey)
                     }
                 }
             }
         }
-        //youtubePlayer.load(withVideoId: "lV4YY5EIFOI")
-        imageMovie.image = imageCell
-        titleLabel.text = titleCell
         navigationController?.navigationBar.isHidden = false
         let newBackButton = UIBarButtonItem(title: "Back", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.back(sender:)))
                 self.navigationItem.leftBarButtonItem = newBackButton
@@ -50,15 +56,15 @@ class DetailsViewController: UIViewController {
             sender.setImage(UIImage(named: "favoriteIconEmpty"), for: .normal)
         }
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
+//extension DetailsViewController: UICollectionViewDataSource {
+//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        <#code#>
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        <#code#>
+//    }
+//
+//
+//}

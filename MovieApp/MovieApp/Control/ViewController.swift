@@ -10,7 +10,7 @@ import UIKit
 class ViewController: UIViewController {
 
     var populerMovies: [Result] = []
-
+    var isHeaderHidden = false
     @IBOutlet weak var contentViewTopConstaint: NSLayoutConstraint!
     @IBOutlet weak var collectionView: UICollectionView! {
         didSet {
@@ -61,11 +61,18 @@ extension ViewController: UISearchTextFieldDelegate {
 extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let scrollOffset = scrollView.contentOffset.y
-        if scrollOffset < cellHeight+10, scrollView.contentOffset.y > cellHeight-10 || scrollOffset == 0.0 {
+        if !isHeaderHidden, scrollView.contentOffset.y > cellHeight-10 {
             self.contentViewTopConstaint.constant =  -scrollView.contentOffset.y
-            UIView.animate(withDuration: 3.0) {
-                self.view.layoutIfNeeded()
-            }
+            configureHeader()
+        }else if isHeaderHidden,scrollOffset < 10.0 {
+            self.contentViewTopConstaint.constant =  0.0
+            configureHeader()
+        }
+    }
+    func configureHeader() {
+        isHeaderHidden = !isHeaderHidden
+        UIView.animate(withDuration: 3.0) {
+            self.view.layoutIfNeeded()
         }
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -81,10 +88,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! MovieCollectionCell
         let detailsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: Constants.Routes.detailsPage) as! DetailsViewController
-        detailsVC.imageCell = cell.imageView.image
-        detailsVC.titleCell = cell.movieTitle.text
         detailsVC.movieID = populerMovies[indexPath.row].movieID
-        //present(detailsVC, animated: true)
         navigationController?.pushViewController(detailsVC, animated: true)
     }
 
