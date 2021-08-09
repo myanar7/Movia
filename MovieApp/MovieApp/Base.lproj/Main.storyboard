@@ -326,6 +326,7 @@
                     </view>
                     <connections>
                         <outlet property="backgroundImage" destination="Kve-hs-xWC" id="OYU-qW-YsL"/>
+                        <outlet property="favoriteButton" destination="uCY-yL-JEb" id="VTE-IC-cXp"/>
                         <outlet property="imageMovie" destination="pWX-Qx-7Em" id="7Du-N8-Kq8"/>
                         <outlet property="imdbLabel" destination="Nfe-lg-5eB" id="mi0-k0-a1C"/>
                         <outlet property="imdbView" destination="W25-Dg-1Wq" id="tta-86-gD9"/>

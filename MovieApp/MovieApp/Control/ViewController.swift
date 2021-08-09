@@ -8,9 +8,9 @@
 import UIKit
 
 class ViewController: UIViewController {
-
     var populerMovies: [Result] = []
     var isHeaderHidden = false
+    var currentPage = 1
     @IBOutlet weak var contentViewTopConstaint: NSLayoutConstraint!
     @IBOutlet weak var collectionView: UICollectionView! {
         didSet {
@@ -64,10 +64,29 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
         if !isHeaderHidden, scrollView.contentOffset.y > cellHeight-10 {
             self.contentViewTopConstaint.constant =  -scrollView.contentOffset.y
             configureHeader()
-        }else if isHeaderHidden,scrollOffset < 10.0 {
+        }else if isHeaderHidden, scrollOffset < 10.0 {
             self.contentViewTopConstaint.constant =  0.0
             configureHeader()
+        }else if scrollOffset > collectionView.contentSize.height - 100 - scrollView.frame.size.height {
+            guard !MovieNetwork.shared.isPaging else {return}
+            MovieNetwork.shared.setPaging(with: true)
+            MovieNetwork.shared.fetchMovies(page: currentPage+1, model: Movie.self) { (movies) in
+                self.currentPage += 1
+                self.populerMovies.append(contentsOf: movies.results ?? [])
+                MovieNetwork.shared.setPaging(with: false)
+            }
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
         }
+    }
+    private func createSpinnerFooter() -> UIView {
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 100))
+        let spinner = UIActivityIndicatorView()
+        spinner.center = footerView.center
+        footerView.addSubview(spinner)
+        spinner.startAnimating()
+        return footerView
     }
     func configureHeader() {
         isHeaderHidden = !isHeaderHidden
@@ -82,12 +101,13 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.Nibs.movieCollectionCell, for: indexPath) as! MovieCollectionCell
         let data = populerMovies[indexPath.row]
-        cell.configure(title: data.title, posterPath: data.posterPath, imdb: data.imdbScore)
+        cell.configure(title: data.title, posterPath: data.posterPath, imdb: data.imdbScore, movieID : data.movieID)
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! MovieCollectionCell
         let detailsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: Constants.Routes.detailsPage) as! DetailsViewController
+        detailsVC.delegate = self
         detailsVC.movieID = populerMovies[indexPath.row].movieID
         navigationController?.pushViewController(detailsVC, animated: true)
     }
@@ -108,5 +128,10 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
                             collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return view.frame.height/40.0
+    }
+}
+extension ViewController: FavoriteDelegate{
+    func didChangeFavorite() {
+        collectionView.reloadData()
     }
 }
