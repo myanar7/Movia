@@ -11,11 +11,22 @@ struct Constants {
 
     struct Network {
         static let apiKey = "71d98b08f7e35fae8bdf6f14d6c2f67d"
-        static let searchingParameter = ""
-        static let imageURL = "https://image.tmdb.org/t/w500/original"
+        static let searchingParameter = "search/movie"
+        static let imageURL = "https://image.tmdb.org/t/p/w500"
+        static func detailUrl (with movieID: Int) -> String {
+            return "movie/\(movieID)"
+        }
+        static func videoUrl (with movieID: Int) -> String {
+            return "movie/\(movieID)/videos"
+        }
     }
     struct AppInfo {
         static let appName = "Movie"
+    }
+    struct Assets {
+        static let placeholderImage = "LotrImage"
+        static let isFavoriteImage = "favoriteIconFilled"
+        static let isNotFavoriteImage = "favoriteIconEmpty"
     }
     struct Nibs {
         static let movieCollectionCell = "MovieCollectionCell"
@@ -29,5 +40,10 @@ struct Constants {
     }
     struct Routes {
         static let detailsPage = "DetailsViewController"
+    }
+    struct CoreData {
+        static func predicate (with movieID: Int) -> String {
+            return "movieID == \(movieID)"
+        }
     }
 }

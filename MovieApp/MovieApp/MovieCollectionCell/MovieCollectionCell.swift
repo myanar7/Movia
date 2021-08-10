@@ -30,14 +30,14 @@ class MovieCollectionCell: UICollectionViewCell {
             }
             hasMovie(movieID: movieID)
             if posterPath != nil {
-                imageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/original\(posterPath!)"), placeholder: UIImage(named: "LotrImage"))
+                imageView.kf.setImage(with: URL(string: "\(Constants.Network.imageURL)\(posterPath!)"), placeholder: UIImage(named: Constants.Assets.placeholderImage))
             }
         }
     }
-    func findMovie (movieID: Int?,completion: (_ data: FavoriteMovie?) -> Void){
+    func findMovie (movieID: Int?, completion: (_ data: FavoriteMovie?) -> Void){
         let request: NSFetchRequest<FavoriteMovie> = FavoriteMovie.fetchRequest()
         if let safeID = movieID {
-            request.predicate = NSPredicate(format: "movieID == \(safeID)")
+            request.predicate = NSPredicate(format: Constants.CoreData.predicate(with: safeID))
             do {
                 try completion(context.fetch(request).first)
                 } catch {
@@ -45,11 +45,10 @@ class MovieCollectionCell: UICollectionViewCell {
             }
         }
     }
-    func hasMovie (movieID : Int?) {
-        var result = false
+    func hasMovie (movieID: Int?) {
         findMovie(movieID: movieID) { (movie) in
             if movie != nil {
-                self.favoriteIcon.image = UIImage(named: "favoriteIconFilled")
+                self.favoriteIcon.image = UIImage(named: Constants.Assets.isFavoriteImage)
             } else {
                 self.favoriteIcon.image = UIImage()
             }

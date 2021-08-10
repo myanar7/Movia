@@ -10,7 +10,6 @@ import youtube_ios_player_helper
 import Kingfisher
 import CoreData
 
-
 protocol FavoriteDelegate {
     func didChangeFavorite()
 }
@@ -36,27 +35,26 @@ class DetailsViewController: UIViewController {
         imageMovie.layer.cornerRadius = 10.0
         imdbView.layer.cornerRadius = 10.0
         if let safeID = movieID {
-            MovieNetwork.shared.fetchMovies(with: "movie/\(safeID)", model: Detail.self) { (detail) in
+            MovieNetwork.shared.fetchMovies(with: Constants.Network.detailUrl(with: safeID), model: Detail.self) { (detail) in
                 self.detailInfo = detail
                 self.imdbLabel.text = String(describing: detail.imdbScore ?? 0.0)
                 self.overviewLabel.text = detail.overview ?? ""
                 self.relaseLabel.text = "Relase Date: \(detail.releaseDate ?? "")"
-                self.imageMovie.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/original\(detail.posterPath ?? "")"), placeholder: UIImage(named: "LotrImage"))
+                self.imageMovie.kf.setImage(with: URL(string: "\(Constants.Network.imageURL)\(detail.posterPath ?? "")"), placeholder: UIImage(named: Constants.Assets.placeholderImage))
                 self.titleLabel.text = "Title: \(detail.title ?? "")"
-                self.backgroundImage.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/original\(detail.backdrop ?? "")"))
+                self.backgroundImage.kf.setImage(with: URL(string: "\(Constants.Network.imageURL)\(detail.backdrop ?? "")"))
                 self.hasFavorite = self.hasMovie()
                 if self.hasFavorite {
-                    self.favoriteButton.setImage(UIImage(named: "favoriteIconFilled"), for: .normal)
+                    self.favoriteButton.setImage(UIImage(named: Constants.Assets.isFavoriteImage), for: .normal)
                     self.isFavorite = true
                 }
-                MovieNetwork.shared.fetchMovies(with: "movie/\(safeID)/videos", model: Trailer.self) { (trailer) in
+                MovieNetwork.shared.fetchMovies(with: Constants.Network.videoUrl(with: safeID), model: Trailer.self) { (trailer) in
                     if let safeKey = trailer.results?.first?.videoKey {
                         self.youtubePlayer.load(withVideoId: safeKey)
                     }
                 }
             }
         }
-        
         navigationController?.navigationBar.isHidden = false
         let newBackButton = UIBarButtonItem(title: "Back", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.back(sender:)))
                 self.navigationItem.leftBarButtonItem = newBackButton
@@ -82,9 +80,9 @@ class DetailsViewController: UIViewController {
     }
     @IBAction func addFavorite(_ sender: UIButton) {
         if !isFavorite {
-            sender.setImage(UIImage(named: "favoriteIconFilled"), for: .normal)
+            sender.setImage(UIImage(named: Constants.Assets.isFavoriteImage), for: .normal)
         } else {
-            sender.setImage(UIImage(named: "favoriteIconEmpty"), for: .normal)
+            sender.setImage(UIImage(named: Constants.Assets.isNotFavoriteImage), for: .normal)
         }
         isFavorite = !isFavorite
     }
@@ -112,10 +110,10 @@ class DetailsViewController: UIViewController {
             }
         }
     }
-    func findMovie (movieID: Int?,completion: (_ data: FavoriteMovie?) -> Void) {
+    func findMovie (movieID: Int?, completion: (_ data: FavoriteMovie?) -> Void) {
         let request: NSFetchRequest<FavoriteMovie> = FavoriteMovie.fetchRequest()
         if let safeID = movieID {
-            request.predicate = NSPredicate(format: "movieID == \(safeID)")
+            request.predicate = NSPredicate(format: Constants.CoreData.predicate(with: safeID))
             do {
                 try completion(context.fetch(request).first)
             } catch {
@@ -124,14 +122,3 @@ class DetailsViewController: UIViewController {
         }
     }
 }
-//extension DetailsViewController: UICollectionViewDataSource {
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        <#code#>
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        <#code#>
-//    }
-//
-//
-//}
