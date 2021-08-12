@@ -20,19 +20,18 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configurePage()
-        getMovies()
+        //getMovies()
+        indicatorFirstLoad()
     }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        let fadeView:UIView = UIView()
+    func indicatorFirstLoad () {
+        let fadeView: UIView = UIView()
         fadeView.frame = self.view.frame
         fadeView.backgroundColor = UIColor.white
         fadeView.alpha = 0.4
-        
         self.view.addSubview(fadeView)
-        
         self.view.addSubview(activityView)
         activityView.hidesWhenStopped = true
+        self.view.bringSubviewToFront(activityView)
         activityView.center = self.view.center
         activityView.startAnimating()
         DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
@@ -46,6 +45,10 @@ class ViewController: UIViewController {
                 self.activityView.stopAnimating()
             }, completion: nil)
         }
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        collectionView.reloadData()
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -111,7 +114,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
         } else if isHeaderHidden, scrollOffset < 10.0 {
             self.contentViewTopConstaint.constant =  0.0
             configureHeader()
-        } else if scrollOffset > collectionView.contentSize.height + 300 - scrollView.frame.size.height {
+        } else if scrollOffset > collectionView.contentSize.height + 100 - scrollView.frame.size.height {
             guard !MovieNetwork.shared.isPaging else {return}
             MovieNetwork.shared.setPaging(with: true)
             MovieNetwork.shared.fetchMovies(with: (isSearched) ? Constants.Network.searchingParameter : nil, page: currentPage+1, query: searchField.text, model: Movie.self) { (movies) in

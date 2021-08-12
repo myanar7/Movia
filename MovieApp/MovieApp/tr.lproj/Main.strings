@@ -1,0 +1,30 @@
+
+/* Class = "UINavigationItem"; title = "Mutflix"; ObjectID = "7Ko-v3-T2F"; */
+"7Ko-v3-T2F.title" = "Movia";
+
+/* Class = "UITabBarItem"; title = "Favorites"; ObjectID = "MbF-of-MHG"; */
+"MbF-of-MHG.title" = "Favoriler";
+
+/* Class = "UILabel"; text = "Overview:"; ObjectID = "Nfc-73-3cu"; */
+"Nfc-73-3cu.text" = "Özet:";
+
+/* Class = "UILabel"; text = "0.0"; ObjectID = "Nfe-lg-5eB"; */
+"Nfe-lg-5eB.text" = "0.0";
+
+/* Class = "UILabel"; text = "All Populer Movies >"; ObjectID = "QcP-dE-G02"; */
+"QcP-dE-G02.text" = "Bütün Popüler Filmler >";
+
+/* Class = "UISearchBar"; placeholder = "Search Movie"; ObjectID = "SEE-mf-Cht"; */
+"SEE-mf-Cht.placeholder" = "Film Ara";
+
+/* Class = "UILabel"; text = "(OVERVİEW)"; ObjectID = "UEC-uE-mGZ"; */
+"UEC-uE-mGZ.text" = "(Film Açıklaması)";
+
+/* Class = "UILabel"; text = "Title:"; ObjectID = "Uac-BV-Ba8"; */
+"Uac-BV-Ba8.text" = "Başlık:";
+
+/* Class = "UITabBarItem"; title = "Popular"; ObjectID = "Wud-x6-Ot9"; */
+"Wud-x6-Ot9.title" = "Popüler";
+
+/* Class = "UILabel"; text = "Relase Date:"; ObjectID = "yKP-o5-l1G"; */
+"yKP-o5-l1G.text" = "Çıkma Tarihi:";
