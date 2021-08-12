@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct Trailer: Decodable{
-    let results : [VideoKey]?
+struct Trailer: Decodable {
+    let results: [VideoKey]?
 }
 struct VideoKey: Decodable {
     let videoKey: String?

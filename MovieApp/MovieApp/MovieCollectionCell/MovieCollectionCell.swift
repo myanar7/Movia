@@ -34,7 +34,7 @@ class MovieCollectionCell: UICollectionViewCell {
             }
         }
     }
-    func findMovie (movieID: Int?, completion: (_ data: FavoriteMovie?) -> Void){
+    func findMovie (movieID: Int?, completion: (_ data: FavoriteMovie?) -> Void) {
         let request: NSFetchRequest<FavoriteMovie> = FavoriteMovie.fetchRequest()
         if let safeID = movieID {
             request.predicate = NSPredicate(format: Constants.CoreData.predicate(with: safeID))
