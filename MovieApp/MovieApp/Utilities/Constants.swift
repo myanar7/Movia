@@ -24,7 +24,7 @@ struct Constants {
         static let appName = "Movie"
     }
     struct Assets {
-        static let placeholderImage = "LotrImage"
+        static let placeholderImage = "placeholderImage"
         static let isFavoriteImage = "favoriteIconFilled"
         static let isNotFavoriteImage = "favoriteIconEmpty"
     }

@@ -31,6 +31,8 @@ class MovieCollectionCell: UICollectionViewCell {
             hasMovie(movieID: movieID)
             if posterPath != nil {
                 imageView.kf.setImage(with: URL(string: "\(Constants.Network.imageURL)\(posterPath!)"), placeholder: UIImage(named: Constants.Assets.placeholderImage))
+            } else {
+                imageView.image = UIImage(named: Constants.Assets.placeholderImage)
             }
         }
     }

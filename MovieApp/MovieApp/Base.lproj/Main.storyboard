@@ -179,7 +179,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S1D-9K-vCU">
                                                 <rect key="frame" x="20" y="224.5" width="374" height="286.5"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pWX-Qx-7Em">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholderImage" translatesAutoresizingMaskIntoConstraints="NO" id="pWX-Qx-7Em">
                                                         <rect key="frame" x="0.0" y="0.0" width="149.5" height="286.5"/>
                                                     </imageView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="HNf-QV-S7s">
@@ -369,6 +369,7 @@
     <resources>
         <image name="favoriteIconEmpty" width="24" height="24"/>
         <image name="favoriteIconFilled" width="24" height="24"/>
+        <image name="placeholderImage" width="107.5" height="150"/>
         <image name="seal.fill" catalog="system" width="128" height="128"/>
         <image name="star.circle" catalog="system" width="128" height="121"/>
         <image name="star.fill" catalog="system" width="128" height="116"/>

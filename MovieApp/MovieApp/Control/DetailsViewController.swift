@@ -32,6 +32,10 @@ class DetailsViewController: UIViewController {
     var hasFavorite: Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureDetailPage()
+        // Do any additional setup after loading the view.
+    }
+    func configureDetailPage () {
         imageMovie.layer.cornerRadius = 10.0
         imdbView.layer.cornerRadius = 10.0
         if let safeID = movieID {
@@ -59,7 +63,6 @@ class DetailsViewController: UIViewController {
         let newBackButton = UIBarButtonItem(title: "Back", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.back(sender:)))
                 self.navigationItem.leftBarButtonItem = newBackButton
         navigationItem.leftBarButtonItem = newBackButton
-        // Do any additional setup after loading the view.
     }
     @objc func back(sender: UIBarButtonItem) {
         if isFavorite, !hasFavorite {

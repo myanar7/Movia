@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -21,7 +22,7 @@
                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rOU-4k-fSU">
                         <rect key="frame" x="0.0" y="0.0" width="184" height="352"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LotrImage" translatesAutoresizingMaskIntoConstraints="NO" id="rlU-Da-KVz">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholderImage" translatesAutoresizingMaskIntoConstraints="NO" id="rlU-Da-KVz">
                                 <rect key="frame" x="0.0" y="0.0" width="184" height="277"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P6f-Dn-HB2">
@@ -118,7 +119,7 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="LotrImage" width="187.5" height="187.5"/>
+        <image name="placeholderImage" width="107.5" height="150"/>
         <image name="star.fill" catalog="system" width="128" height="116"/>
         <namedColor name="barColor">
             <color red="0.31999999284744263" green="0.36500000953674316" blue="0.38499999046325684" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

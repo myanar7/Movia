@@ -12,6 +12,7 @@ class ViewController: UIViewController {
     var isHeaderHidden = false
     var isSearched = false
     var currentPage = 1
+    let activityView = UIActivityIndicatorView(style: .large)
     @IBOutlet weak var contentViewTopConstaint: NSLayoutConstraint!
     @IBOutlet weak var searchField: UISearchBar!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -23,7 +24,28 @@ class ViewController: UIViewController {
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        collectionView.reloadData()
+        let fadeView:UIView = UIView()
+        fadeView.frame = self.view.frame
+        fadeView.backgroundColor = UIColor.white
+        fadeView.alpha = 0.4
+        
+        self.view.addSubview(fadeView)
+        
+        self.view.addSubview(activityView)
+        activityView.hidesWhenStopped = true
+        activityView.center = self.view.center
+        activityView.startAnimating()
+        DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
+            self.getMovies()
+        }
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 1, delay: 1, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseInOut, animations: {
+                self.collectionView?.reloadData()
+                self.collectionView?.alpha = 1
+                fadeView.removeFromSuperview()
+                self.activityView.stopAnimating()
+            }, completion: nil)
+        }
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -84,12 +106,12 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let scrollOffset = scrollView.contentOffset.y
         if !isHeaderHidden, scrollView.contentOffset.y > cellHeight-20 {
-            self.contentViewTopConstaint.constant =  -scrollView.contentOffset.y
+            self.contentViewTopConstaint.constant =  -collectionView.frame.height/2.3
             configureHeader()
         } else if isHeaderHidden, scrollOffset < 10.0 {
             self.contentViewTopConstaint.constant =  0.0
             configureHeader()
-        } else if scrollOffset > collectionView.contentSize.height - 100 - scrollView.frame.size.height {
+        } else if scrollOffset > collectionView.contentSize.height + 300 - scrollView.frame.size.height {
             guard !MovieNetwork.shared.isPaging else {return}
             MovieNetwork.shared.setPaging(with: true)
             MovieNetwork.shared.fetchMovies(with: (isSearched) ? Constants.Network.searchingParameter : nil, page: currentPage+1, query: searchField.text, model: Movie.self) { (movies) in
