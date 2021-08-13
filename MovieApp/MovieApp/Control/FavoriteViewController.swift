@@ -51,7 +51,7 @@ extension FavoriteViewController: UICollectionViewDataSource, UICollectionViewDe
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let detailsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: Constants.Routes.detailsPage) as! DetailsViewController
+        let detailsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Routes.detailsPage) as! DetailsViewController
         detailsVC.delegate = self
         detailsVC.movieID = Int(favoriteMovies[indexPath.row].movieID)
         navigationController?.pushViewController(detailsVC, animated: true)

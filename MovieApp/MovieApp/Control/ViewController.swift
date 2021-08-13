@@ -12,7 +12,7 @@ class ViewController: UIViewController {
     var isHeaderHidden = false
     var isSearched = false
     var currentPage = 1
-    let activityView = UIActivityIndicatorView(style: .large)
+    let activityView = UIActivityIndicatorView()
     @IBOutlet weak var contentViewTopConstaint: NSLayoutConstraint!
     @IBOutlet weak var searchField: UISearchBar!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -24,6 +24,11 @@ class ViewController: UIViewController {
         indicatorFirstLoad()
     }
     func indicatorFirstLoad () {
+        if #available(iOS 13.0, *) {
+                   activityView.style = .large
+               } else {
+                   activityView.style = .whiteLarge
+               }
         let fadeView: UIView = UIView()
         fadeView.frame = self.view.frame
         fadeView.backgroundColor = UIColor.white
@@ -66,7 +71,13 @@ class ViewController: UIViewController {
     }
     func configurePage() {
         cellHeight = collectionView.frame.height/3
-        searchField.searchTextField.delegate = self
+        if #available(iOS 13.0, *) {
+            searchField.searchTextField.delegate = self
+            } else {
+              if let textField = searchField.value(forKey: "searchField") as? UITextField {
+                textField.delegate = self
+              }
+            }
         searchField.delegate = self
         navigationController?.navigationBar.isHidden = true
         collectionView.backgroundColor = UIColor(patternImage: UIImage())
@@ -127,6 +138,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
             }
         }
     }
+    
     private func createSpinnerFooter() -> UIView {
         let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 100))
         let spinner = UIActivityIndicatorView()
@@ -154,7 +166,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let detailsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: Constants.Routes.detailsPage) as! DetailsViewController
+        let detailsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: Constants.Routes.detailsPage) as! DetailsViewController
         detailsVC.delegate = self
         detailsVC.movieID = populerMovies[indexPath.row].movieID
         navigationController?.pushViewController(detailsVC, animated: true)
