@@ -12,48 +12,23 @@ class ViewController: UIViewController {
     var isHeaderHidden = false
     var isSearched = false
     var currentPage = 1
-    let activityView = UIActivityIndicatorView()
     @IBOutlet weak var contentViewTopConstaint: NSLayoutConstraint!
     @IBOutlet weak var searchField: UISearchBar!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var indicatorView: UIView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     var cellHeight: CGFloat = 0.0
     override func viewDidLoad() {
         super.viewDidLoad()
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = view.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        indicatorView.insertSubview(blurEffectView, at: 0)
+        activityIndicator.startAnimating()
         configurePage()
-        //getMovies()
-        indicatorFirstLoad()
-    }
-    func indicatorFirstLoad () {
-        if #available(iOS 13.0, *) {
-                   activityView.style = .large
-               } else {
-                   activityView.style = .whiteLarge
-               }
-        let fadeView: UIView = UIView()
-        fadeView.frame = self.view.frame
-        fadeView.backgroundColor = UIColor.white
-        fadeView.alpha = 0.4
-        self.view.addSubview(fadeView)
-        self.view.addSubview(activityView)
-        activityView.hidesWhenStopped = true
-        self.view.bringSubviewToFront(activityView)
-        activityView.center = self.view.center
-        activityView.startAnimating()
-        DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
-            self.getMovies()
-        }
-        DispatchQueue.main.async {
-            UIView.animate(withDuration: 1, delay: 1, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseInOut, animations: {
-                self.collectionView?.reloadData()
-                self.collectionView?.alpha = 1
-                fadeView.removeFromSuperview()
-                self.activityView.stopAnimating()
-            }, completion: nil)
-        }
-    }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        collectionView.reloadData()
+        getMovies()
+        
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -61,11 +36,15 @@ class ViewController: UIViewController {
     }
     func getMovies() {
         MovieNetwork.shared.fetchMovies(model: Movie.self) { (data) in
-
             if let movies = data.results {
                 self.populerMovies = movies
                 self.currentPage = 1
                 self.collectionView.reloadData()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    self.activityIndicator.stopAnimating()
+                    self.indicatorView.isHidden = true
+                }
+                
             }
         }
     }
@@ -138,14 +117,8 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
             }
         }
     }
-    
-    private func createSpinnerFooter() -> UIView {
-        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 100))
-        let spinner = UIActivityIndicatorView()
-        spinner.center = footerView.center
-        footerView.addSubview(spinner)
-        spinner.startAnimating()
-        return footerView
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        //
     }
     func configureHeader() {
         isHeaderHidden = !isHeaderHidden

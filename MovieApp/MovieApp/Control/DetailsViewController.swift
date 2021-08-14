@@ -24,6 +24,8 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var imdbView: UIView!
     @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var indicatorView: UIView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     var movieID: Int?
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var detailInfo: Detail?
@@ -32,6 +34,12 @@ class DetailsViewController: UIViewController {
     var hasFavorite: Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = view.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        indicatorView.insertSubview(blurEffectView, at: 0)
+        activityIndicator.startAnimating()
         configureDetailPage()
         // Do any additional setup after loading the view.
     }
@@ -55,6 +63,10 @@ class DetailsViewController: UIViewController {
                 MovieNetwork.shared.fetchMovies(with: Constants.Network.videoUrl(with: safeID), model: Trailer.self) { (trailer) in
                     if let safeKey = trailer.results?.first?.videoKey {
                         self.youtubePlayer.load(withVideoId: safeKey)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                            self.activityIndicator.stopAnimating()
+                            self.indicatorView.isHidden = true
+                        }
                     }
                 }
             }
