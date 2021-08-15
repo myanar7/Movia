@@ -26,6 +26,8 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var indicatorView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var genresLabel: UILabel!
+    @IBOutlet weak var budgetLabel: UILabel!
     var movieID: Int?
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var detailInfo: Detail?
@@ -52,6 +54,8 @@ class DetailsViewController: UIViewController {
                 self.imdbLabel.text = String(describing: detail.imdbScore ?? 0.0)
                 self.overviewLabel.text = detail.overview ?? ""
                 self.relaseLabel.text = "Relase Date: \(detail.releaseDate ?? "")"
+                self.budgetLabel.text = "Budget: \(String(describing: detail.budget ?? 0))"
+                self.genresLabel.text = self.genres(genres: detail.genres ?? [])
                 self.imageMovie.kf.setImage(with: URL(string: "\(Constants.Network.imageURL)\(detail.posterPath ?? "")"), placeholder: UIImage(named: Constants.Assets.placeholderImage))
                 self.titleLabel.text = "Title: \(detail.title ?? "")"
                 self.backgroundImage.kf.setImage(with: URL(string: "\(Constants.Network.imageURL)\(detail.backdrop ?? "")"))
@@ -92,6 +96,13 @@ class DetailsViewController: UIViewController {
         }
         self.navigationController?.navigationBar.isHidden = true
         self.navigationController?.popViewController(animated: true)
+    }
+    func genres (genres: [Genre]) -> String {
+        var allGenres: String = ""
+        for genre in genres {
+            allGenres += "\(genre.name ?? "") "
+        }
+        return allGenres
     }
     @IBAction func addFavorite(_ sender: UIButton) {
         if !isFavorite {

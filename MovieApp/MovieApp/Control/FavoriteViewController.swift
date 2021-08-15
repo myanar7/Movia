@@ -16,11 +16,6 @@ class FavoriteViewController: UIViewController {
         configurePage()
         getFavoriteMovies()
     }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        getFavoriteMovies() // BURADA Bİ ŞEYLER DEĞİŞMELİ HER GEÇİŞTE LOAD ETMESİ GEREKSİZ
-        collectionView.reloadData()
-    }
     func getFavoriteMovies () {
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         let request: NSFetchRequest<FavoriteMovie> = FavoriteMovie.fetchRequest()
@@ -59,7 +54,7 @@ extension FavoriteViewController: UICollectionViewDataSource, UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width*0.46, height: collectionView.frame.height/3)
+        return CGSize(width: collectionView.frame.width*0.46, height: 300.0)
     }
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
@@ -75,6 +70,7 @@ extension FavoriteViewController: UICollectionViewDataSource, UICollectionViewDe
 // MARK: - Favorite Delegate
 extension FavoriteViewController: FavoriteDelegate {
     func didChangeFavorite() {
+        getFavoriteMovies()
         collectionView.reloadData()
     }
 }

@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -35,7 +34,6 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" name="barColor"/>
                                 <constraints>
                                     <constraint firstItem="Ce3-cV-WMD" firstAttribute="leading" secondItem="P6f-Dn-HB2" secondAttribute="leading" id="1rr-Ar-9n1"/>
                                     <constraint firstAttribute="trailing" secondItem="Ce3-cV-WMD" secondAttribute="trailing" id="cUZ-aS-DgR"/>
@@ -50,9 +48,12 @@
                                     <constraint firstAttribute="width" secondItem="qwO-VV-4Xn" secondAttribute="height" multiplier="1:1" id="e6i-98-JoH"/>
                                 </constraints>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YwE-KZ-G9f">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YwE-KZ-G9f">
                                 <rect key="frame" x="0.0" y="0.0" width="44.5" height="55.5"/>
                                 <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gradientImage" translatesAutoresizingMaskIntoConstraints="NO" id="2lH-TY-iBu">
+                                        <rect key="frame" x="0.0" y="0.0" width="44.5" height="55.5"/>
+                                    </imageView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="apv-sK-NSa">
                                         <rect key="frame" x="8" y="-0.5" width="28.5" height="29"/>
                                         <color key="tintColor" systemColor="systemYellowColor"/>
@@ -72,14 +73,17 @@
                                     <constraint firstAttribute="width" secondItem="YwE-KZ-G9f" secondAttribute="height" multiplier="12:15" id="2vB-ET-o68"/>
                                     <constraint firstItem="apv-sK-NSa" firstAttribute="top" secondItem="YwE-KZ-G9f" secondAttribute="top" id="3LT-KT-k1t"/>
                                     <constraint firstItem="oa0-Rk-lh6" firstAttribute="leading" secondItem="YwE-KZ-G9f" secondAttribute="leading" id="JXL-ze-jyS"/>
+                                    <constraint firstItem="2lH-TY-iBu" firstAttribute="top" secondItem="YwE-KZ-G9f" secondAttribute="top" id="Lda-n1-6ck"/>
                                     <constraint firstAttribute="trailing" secondItem="oa0-Rk-lh6" secondAttribute="trailing" id="RmD-m3-bEd"/>
+                                    <constraint firstAttribute="trailing" secondItem="2lH-TY-iBu" secondAttribute="trailing" id="X1r-kB-EfU"/>
                                     <constraint firstItem="apv-sK-NSa" firstAttribute="centerX" secondItem="YwE-KZ-G9f" secondAttribute="centerX" id="dxJ-mE-uGz"/>
                                     <constraint firstItem="apv-sK-NSa" firstAttribute="leading" secondItem="YwE-KZ-G9f" secondAttribute="leading" constant="8" id="dyf-7Z-dBn"/>
                                     <constraint firstAttribute="bottom" secondItem="oa0-Rk-lh6" secondAttribute="bottom" id="gTB-e9-DBr"/>
+                                    <constraint firstItem="2lH-TY-iBu" firstAttribute="leading" secondItem="YwE-KZ-G9f" secondAttribute="leading" id="ioq-ar-IWo"/>
+                                    <constraint firstAttribute="bottom" secondItem="2lH-TY-iBu" secondAttribute="bottom" id="oqp-oh-kBn"/>
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemGreenColor"/>
                         <constraints>
                             <constraint firstItem="P6f-Dn-HB2" firstAttribute="leading" secondItem="rOU-4k-fSU" secondAttribute="leading" id="0G4-7A-R9c"/>
                             <constraint firstItem="YwE-KZ-G9f" firstAttribute="leading" secondItem="rOU-4k-fSU" secondAttribute="leading" id="6vn-L0-9gO"/>
@@ -119,14 +123,9 @@
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="gradientImage" width="450" height="290"/>
         <image name="placeholderImage" width="107.5" height="150"/>
         <image name="star.fill" catalog="system" width="128" height="116"/>
-        <namedColor name="barColor">
-            <color red="0.31999999284744263" green="0.36500000953674316" blue="0.38499999046325684" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

@@ -21,6 +21,11 @@ class MovieCollectionCell: UICollectionViewCell {
         super.awakeFromNib()
         imdbBackground.layer.cornerRadius = imdbBackground.frame.width/5
         outerCardView.roundedView()
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = outerCardView.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        outerCardView.insertSubview(blurEffectView, at: 0)
     }
     func configure(title: String?, posterPath: String?, imdb: Double?, movieID: Int?) {
         if let safeTitle = title {

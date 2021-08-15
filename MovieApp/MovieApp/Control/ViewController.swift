@@ -20,19 +20,21 @@ class ViewController: UIViewController {
     var cellHeight: CGFloat = 0.0
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadingScreen()
+        configurePage()
+        getMovies()
+    }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        collectionView.collectionViewLayout.invalidateLayout()
+    }
+    func loadingScreen () {
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = view.bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         indicatorView.insertSubview(blurEffectView, at: 0)
         activityIndicator.startAnimating()
-        configurePage()
-        getMovies()
-        
-    }
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        collectionView.collectionViewLayout.invalidateLayout()
     }
     func getMovies() {
         MovieNetwork.shared.fetchMovies(model: Movie.self) { (data) in
