@@ -15,7 +15,7 @@ struct MovieNetwork {
     let baseUrl = "https://api.themoviedb.org/3/"
 
     func fetchMovies<T>(with type: String? = "movie/popular", page: Int = 1, query: String? = nil, model: T.Type, completion : @escaping (T?, AFError?) -> Void) where T: Decodable {
-        var apiParameter = ["api_key": Constants.Network.apiKey]
+        var apiParameter = ["api_key": Constants.Network.apiKey, "language": Locale.current.languageCode]
         if page != 1 {apiParameter["page"] = String(describing: page)}
         if query != nil {apiParameter["query"] = query}
         var safeType = "movie/popular"
@@ -24,12 +24,12 @@ struct MovieNetwork {
             if response.error == nil, let safeData = response.data {
                 do {
                     let decodedData = try JSONDecoder().decode(model, from: safeData)
-                    completion(decodedData,nil)
+                    completion(decodedData, nil)
                 } catch {
                     completion(nil, error.asAFError)
                 }
             } else {
-                completion(nil,response.error)
+                completion(nil, response.error)
             }
         }
     }

@@ -10,7 +10,7 @@ import youtube_ios_player_helper
 import Kingfisher
 import CoreData
 
-protocol FavoriteDelegate {
+protocol FavoriteDelegate: AnyObject {
     func didChangeFavorite()
 }
 
@@ -31,14 +31,14 @@ class DetailsViewController: UIViewController {
     var movieID: Int?
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var detailInfo: Detail?
-    var delegate: FavoriteDelegate?
+    weak var delegate: FavoriteDelegate?
     var isFavorite: Bool = false    // This value is temporary, override the variable by using core data
     var hasFavorite: Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.frame = view.bounds
+        blurEffectView.frame = indicatorView.bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         indicatorView.insertSubview(blurEffectView, at: 0)
         activityIndicator.startAnimating()
@@ -50,7 +50,7 @@ class DetailsViewController: UIViewController {
         imdbView.layer.cornerRadius = 10.0
         if let safeID = movieID {
             MovieNetwork.shared.fetchMovies(with: Constants.Network.detailUrl(with: safeID), model: Detail.self) { (data, error) in
-                if let safeData = data , safeData.success == nil {
+                if let safeData = data, safeData.success == nil {
                     self.detailInfo = data
                     self.imdbLabel.text = String(describing: safeData.imdbScore ?? 0.0)
                     self.overviewLabel.text = safeData.overview ?? ""

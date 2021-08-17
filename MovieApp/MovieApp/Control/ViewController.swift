@@ -32,7 +32,7 @@ class ViewController: UIViewController {
     func loadingScreen () {
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.frame = view.bounds
+        blurEffectView.frame = indicatorView.bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         indicatorView.insertSubview(blurEffectView, at: 0)
         activityIndicator.startAnimating()
