@@ -9,6 +9,7 @@ import Foundation
 
 struct Trailer: Decodable {
     let results: [VideoKey]?
+    let success: Bool?
 }
 struct VideoKey: Decodable {
     let videoKey: String?

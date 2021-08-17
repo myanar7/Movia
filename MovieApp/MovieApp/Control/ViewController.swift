@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class ViewController: UIViewController {
     var populerMovies: [Result] = []
@@ -37,8 +38,8 @@ class ViewController: UIViewController {
         activityIndicator.startAnimating()
     }
     func getMovies() {
-        MovieNetwork.shared.fetchMovies(model: Movie.self) { (data) in
-            if let movies = data.results {
+        MovieNetwork.shared.fetchMovies(model: Movie.self) { (data, error) in
+            if let safeData = data, let movies = safeData.results, safeData.success == nil {
                 self.populerMovies = movies
                 self.currentPage = 1
                 self.collectionView.reloadData()
@@ -46,7 +47,8 @@ class ViewController: UIViewController {
                     self.activityIndicator.stopAnimating()
                     self.indicatorView.isHidden = true
                 }
-                
+            } else {
+                self.didCrashed(error: error)
             }
         }
     }
@@ -81,9 +83,13 @@ extension ViewController: UISearchTextFieldDelegate, UISearchBarDelegate {
         } else {
             currentPage = 1
             isSearched = true
-            MovieNetwork.shared.fetchMovies(with: Constants.Network.searchingParameter, query: textField.text, model: Movie.self) { (movie) in
-                self.populerMovies = movie.results ?? []
-                self.collectionView.reloadData()
+            MovieNetwork.shared.fetchMovies(with: Constants.Network.searchingParameter, query: textField.text, model: Movie.self) { (data, error) in
+                if let safeData = data, let movies = safeData.results, safeData.success == nil{
+                    self.populerMovies = movies
+                    self.collectionView.reloadData()
+                } else {
+                    self.didCrashed(error: error)
+                }
             }
         }
     }
@@ -109,13 +115,15 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
         } else if scrollOffset > collectionView.contentSize.height + 100 - scrollView.frame.size.height {
             guard !MovieNetwork.shared.isPaging else {return}
             MovieNetwork.shared.setPaging(with: true)
-            MovieNetwork.shared.fetchMovies(with: (isSearched) ? Constants.Network.searchingParameter : nil, page: currentPage+1, query: searchField.text, model: Movie.self) { (movies) in
-                self.currentPage += 1
-                self.populerMovies.append(contentsOf: movies.results ?? [])
-                MovieNetwork.shared.setPaging(with: false)
-            }
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
+            MovieNetwork.shared.fetchMovies(with: (isSearched) ? Constants.Network.searchingParameter : nil, page: currentPage+1, query: searchField.text, model: Movie.self) { (data, error) in
+                if let safeData = data, let movies = safeData.results, safeData.success == nil {
+                    self.currentPage += 1
+                    self.populerMovies.append(contentsOf: movies)
+                    self.collectionView.reloadData()
+                    MovieNetwork.shared.setPaging(with: false)
+                } else {
+                    self.didCrashed(error: error)
+                }
             }
         }
     }
@@ -166,5 +174,20 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
 extension ViewController: FavoriteDelegate {
     func didChangeFavorite() {
         collectionView.reloadData()
+    }
+}
+extension UIViewController {
+    func didCrashed (error: AFError?) {
+        let alertMessage = (error != nil) ? error?.errorDescription : "Uygulama Düzgün Çalışmıyor"
+        let alert = UIAlertController(title: "Alert", message: alertMessage, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+            if let navigationStack = self.navigationController?.viewControllers, navigationStack.count > 1 {
+                self.navigationController?.navigationBar.isHidden = true
+                self.navigationController?.popViewController(animated: true)
+            } else {
+                self.loadView()
+            }
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
 }

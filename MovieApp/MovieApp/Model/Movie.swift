@@ -9,6 +9,7 @@ import Foundation
 
 struct Movie: Decodable {
     let results: [Result]?
+    let success: Bool?
 }
 struct Result: Codable {
     let title: String?

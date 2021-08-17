@@ -49,29 +49,33 @@ class DetailsViewController: UIViewController {
         imageMovie.layer.cornerRadius = 10.0
         imdbView.layer.cornerRadius = 10.0
         if let safeID = movieID {
-            MovieNetwork.shared.fetchMovies(with: Constants.Network.detailUrl(with: safeID), model: Detail.self) { (detail) in
-                self.detailInfo = detail
-                self.imdbLabel.text = String(describing: detail.imdbScore ?? 0.0)
-                self.overviewLabel.text = detail.overview ?? ""
-                self.relaseLabel.text = "Relase Date: \(detail.releaseDate ?? "")"
-                self.budgetLabel.text = "Budget: \(String(describing: detail.budget ?? 0))"
-                self.genresLabel.text = self.genres(genres: detail.genres ?? [])
-                self.imageMovie.kf.setImage(with: URL(string: "\(Constants.Network.imageURL)\(detail.posterPath ?? "")"), placeholder: UIImage(named: Constants.Assets.placeholderImage))
-                self.titleLabel.text = "Title: \(detail.title ?? "")"
-                self.backgroundImage.kf.setImage(with: URL(string: "\(Constants.Network.imageURL)\(detail.backdrop ?? "")"))
-                self.hasFavorite = self.hasMovie()
-                if self.hasFavorite {
-                    self.favoriteButton.setImage(UIImage(named: Constants.Assets.isFavoriteImage), for: .normal)
-                    self.isFavorite = true
-                }
-                MovieNetwork.shared.fetchMovies(with: Constants.Network.videoUrl(with: safeID), model: Trailer.self) { (trailer) in
-                    if let safeKey = trailer.results?.first?.videoKey {
-                        self.youtubePlayer.load(withVideoId: safeKey)
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                            self.activityIndicator.stopAnimating()
-                            self.indicatorView.isHidden = true
+            MovieNetwork.shared.fetchMovies(with: Constants.Network.detailUrl(with: safeID), model: Detail.self) { (data, error) in
+                if let safeData = data , safeData.success == nil {
+                    self.detailInfo = data
+                    self.imdbLabel.text = String(describing: safeData.imdbScore ?? 0.0)
+                    self.overviewLabel.text = safeData.overview ?? ""
+                    self.relaseLabel.text = "Relase Date: \(safeData.releaseDate ?? "")"
+                    self.budgetLabel.text = "Budget: \(String(describing: safeData.budget ?? 0))"
+                    self.genresLabel.text = self.genres(genres: safeData.genres ?? [])
+                    self.imageMovie.kf.setImage(with: URL(string: "\(Constants.Network.imageURL)\(safeData.posterPath ?? "")"), placeholder: UIImage(named: Constants.Assets.placeholderImage))
+                    self.titleLabel.text = "Title: \(safeData.title ?? "")"
+                    self.backgroundImage.kf.setImage(with: URL(string: "\(Constants.Network.imageURL)\(safeData.backdrop ?? "")"))
+                    self.hasFavorite = self.hasMovie()
+                    if self.hasFavorite {
+                        self.favoriteButton.setImage(UIImage(named: Constants.Assets.isFavoriteImage), for: .normal)
+                        self.isFavorite = true
+                    }
+                    MovieNetwork.shared.fetchMovies(with: Constants.Network.videoUrl(with: safeID), model: Trailer.self) { (trailer, _) in
+                        if let safeTrailer = trailer, let safeKey = safeTrailer.results?.first?.videoKey {
+                            self.youtubePlayer.load(withVideoId: safeKey)
                         }
                     }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        self.activityIndicator.stopAnimating()
+                        self.indicatorView.isHidden = true
+                    }
+                } else {
+                    self.didCrashed(error: error)
                 }
             }
         }
