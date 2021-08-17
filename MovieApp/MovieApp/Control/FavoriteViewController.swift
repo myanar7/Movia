@@ -14,6 +14,10 @@ class FavoriteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configurePage()
+        // getFavoriteMovies()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
         getFavoriteMovies()
     }
     func getFavoriteMovies () {

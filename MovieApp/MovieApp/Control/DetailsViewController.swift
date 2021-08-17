@@ -81,7 +81,7 @@ class DetailsViewController: UIViewController {
         }
         navigationController?.navigationBar.isHidden = false
         let newBackButton = UIBarButtonItem(title: "Back", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.back(sender:)))
-                self.navigationItem.leftBarButtonItem = newBackButton
+        self.navigationItem.leftBarButtonItem = newBackButton
         navigationItem.leftBarButtonItem = newBackButton
     }
     @objc func back(sender: UIBarButtonItem) {

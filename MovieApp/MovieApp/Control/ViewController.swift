@@ -26,9 +26,12 @@ class ViewController: UIViewController {
         configurePage()
         getMovies()
     }
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        collectionView.collectionViewLayout.invalidateLayout()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        collectionView.reloadData()
+    }
+    override var prefersStatusBarHidden: Bool {
+        return true
     }
     func loadingScreen () {
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
@@ -85,7 +88,7 @@ extension ViewController: UISearchTextFieldDelegate, UISearchBarDelegate {
             currentPage = 1
             isSearched = true
             MovieNetwork.shared.fetchMovies(with: Constants.Network.searchingParameter, query: textField.text, model: Movie.self) { (data, error) in
-                if let safeData = data, let movies = safeData.results, safeData.success == nil{
+                if let safeData = data, let movies = safeData.results, safeData.success == nil {
                     self.populerMovies = movies
                     self.collectionView.reloadData()
                 } else {
@@ -134,7 +137,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
     func configureHeader() {
         isHeaderHidden = !isHeaderHidden
         DispatchQueue.main.async {
-            UIView.animate(withDuration: 3.0) {
+            UIView.animate(withDuration: 0.8) {
                 self.view.layoutIfNeeded()
             }
         }
