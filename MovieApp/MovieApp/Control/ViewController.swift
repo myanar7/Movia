@@ -17,6 +17,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var searchField: UISearchBar!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var indicatorView: UIView!
+    @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     var cellHeight: CGFloat = 0.0
     override func viewDidLoad() {
@@ -107,7 +108,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let scrollOffset = scrollView.contentOffset.y
         if !isHeaderHidden, scrollView.contentOffset.y > cellHeight-20 {
-            self.contentViewTopConstaint.constant =  -collectionView.frame.height/2.3
+            self.contentViewTopConstaint.constant =  -headerView.frame.height
             configureHeader()
         } else if isHeaderHidden, scrollOffset < 10.0 {
             self.contentViewTopConstaint.constant =  0.0
