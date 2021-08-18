@@ -20,6 +20,9 @@ class FavoriteViewController: UIViewController {
         super.viewDidAppear(true)
         getFavoriteMovies()
     }
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
     func getFavoriteMovies () {
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         let request: NSFetchRequest<FavoriteMovie> = FavoriteMovie.fetchRequest()
@@ -46,7 +49,7 @@ extension FavoriteViewController: UICollectionViewDataSource, UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.Nibs.movieCollectionCell, for: indexPath) as! MovieCollectionCell
         let data = favoriteMovies[indexPath.row]
-        cell.configure(title: data.title, posterPath: data.imagePath, imdb: data.imdbScore, movieID: Int(data.movieID))
+        cell.configure(posterPath: data.imagePath, imdb: data.imdbScore, movieID: Int(data.movieID))
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -58,7 +61,7 @@ extension FavoriteViewController: UICollectionViewDataSource, UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width*0.46, height: 300.0)
+        return CGSize(width: 150, height: 250)
     }
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,

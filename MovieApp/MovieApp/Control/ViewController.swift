@@ -1,10 +1,3 @@
-//
-//  ViewController.swift
-//  MovieApp
-//
-//  Created by obss on 30.07.2021.
-//
-
 import UIKit
 import Alamofire
 
@@ -41,7 +34,7 @@ class ViewController: UIViewController {
         indicatorView.insertSubview(blurEffectView, at: 0)
         activityIndicator.startAnimating()
     }
-    func getMovies() {
+    @objc func getMovies() {
         MovieNetwork.shared.fetchMovies(model: Movie.self) { (data, error) in
             if let safeData = data, let movies = safeData.results, safeData.success == nil {
                 self.populerMovies = movies
@@ -57,12 +50,15 @@ class ViewController: UIViewController {
         }
     }
     func configurePage() {
-        cellHeight = collectionView.frame.height/3
         if #available(iOS 13.0, *) {
             searchField.searchTextField.delegate = self
+            if let clearButton = searchField.searchTextField.value(forKey: "_clearButton")as? UIButton {
+                clearButton.addTarget(self, action: #selector(self.getMovies), for: .touchUpInside)
+                }
             } else {
-              if let textField = searchField.value(forKey: "searchField") as? UITextField {
+              if let textField = searchField.value(forKey: "searchField") as? UITextField, let clearButton = textField.value(forKey: "_clearButton")as? UIButton {
                 textField.delegate = self
+                clearButton.addTarget(self, action: #selector(self.getMovies), for: .touchUpInside)
               }
             }
         searchField.delegate = self
@@ -97,27 +93,19 @@ extension ViewController: UISearchTextFieldDelegate, UISearchBarDelegate {
             }
         }
     }
-    func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        getMovies()
-        isSearched = false
-    }
 }
 // MARK: - Collection View Protocols
 extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let scrollOffset = scrollView.contentOffset.y
-        if !isHeaderHidden, scrollView.contentOffset.y > cellHeight-20 {
+        if !isHeaderHidden, scrollView.contentOffset.y > 300.0 {    // When contentOffset pass away a cell height
             self.contentViewTopConstaint.constant =  -headerView.frame.height
             configureHeader()
-        } else if isHeaderHidden, scrollOffset < 10.0 {
+        } else if isHeaderHidden, scrollOffset < 10.0 { // When contentOffset on the top of collectionView
             self.contentViewTopConstaint.constant =  0.0
             configureHeader()
         } else if scrollOffset > collectionView.contentSize.height + 100 - scrollView.frame.size.height {
-            guard !MovieNetwork.shared.isPaging else {return}
+            guard !MovieNetwork.shared.isPaging else {return}// When contentOffset pass away height of the whole collectionView
             MovieNetwork.shared.setPaging(with: true)
             MovieNetwork.shared.fetchMovies(with: (isSearched) ? Constants.Network.searchingParameter : nil, page: currentPage+1, query: searchField.text, model: Movie.self) { (data, error) in
                 if let safeData = data, let movies = safeData.results, safeData.success == nil {
@@ -149,7 +137,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.Nibs.movieCollectionCell, for: indexPath) as! MovieCollectionCell
         let data = populerMovies[indexPath.row]
-        cell.configure(title: data.title, posterPath: data.posterPath, imdb: data.imdbScore, movieID: data.movieID)
+        cell.configure(posterPath: data.posterPath, imdb: data.imdbScore, movieID: data.movieID)
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -161,7 +149,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width*0.46, height: 300.0)
+        return CGSize(width: 150, height: 250)
     }
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,

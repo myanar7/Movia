@@ -17,9 +17,11 @@ struct Detail: Decodable {
     let backdrop: String?
     let budget: Int?
     let genres: [Genre]?
+    let status: String?
+    let popularity: Double?
     let success: Bool?
     enum CodingKeys: String, CodingKey {
-        case title, overview, budget, genres, success
+        case title, overview, budget, genres, success, status, popularity
         case movieID = "id"
         case imdbScore = "vote_average"
         case backdrop = "backdrop_path"

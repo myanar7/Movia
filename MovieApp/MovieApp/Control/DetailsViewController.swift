@@ -20,6 +20,8 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var youtubePlayer: YTPlayerView!
     @IBOutlet weak var imdbLabel: UILabel!
+    @IBOutlet weak var popularityLabel: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var imageMovie: UIImageView!
     @IBOutlet weak var imdbView: UIView!
     @IBOutlet weak var backgroundImage: UIImageView!
@@ -36,29 +38,40 @@ class DetailsViewController: UIViewController {
     var hasFavorite: Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
+        customizeViews()
+        configureDetailPage()
+    }
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    func customizeViews () {
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = indicatorView.bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         indicatorView.insertSubview(blurEffectView, at: 0)
         activityIndicator.startAnimating()
-        configureDetailPage()
-        // Do any additional setup after loading the view.
-    }
-    func configureDetailPage () {
         imageMovie.layer.cornerRadius = 10.0
         imdbView.layer.cornerRadius = 10.0
+        navigationController?.navigationBar.isHidden = false
+        let newBackButton = UIBarButtonItem(title: "Back", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.back(sender:)))
+        self.navigationItem.leftBarButtonItem = newBackButton
+        navigationItem.leftBarButtonItem = newBackButton
+    }
+    func configureDetailPage () {
         if let safeID = movieID {
             MovieNetwork.shared.fetchMovies(with: Constants.Network.detailUrl(with: safeID), model: Detail.self) { (data, error) in
                 if let safeData = data, safeData.success == nil {
-                    self.detailInfo = data
-                    self.imdbLabel.text = String(describing: safeData.imdbScore ?? 0.0)
-                    self.overviewLabel.text = safeData.overview ?? ""
-                    self.relaseLabel.text = "Relase Date: \(safeData.releaseDate ?? "")"
-                    self.budgetLabel.text = "Budget: \(String(describing: safeData.budget ?? 0))"
+                    self.detailInfo = safeData
+                    self.hideViewIfNeedsDouble(double: safeData.imdbScore, label: self.imdbLabel)
+                    self.hideViewIfNeedsString(string: safeData.overview, label: self.overviewLabel)
+                    self.hideViewIfNeedsString(string: self.dateFormat(date: safeData.releaseDate), label: self.relaseLabel)
+                    self.hideViewIfNeedsInt(integer: safeData.budget, label: self.budgetLabel)
+                    self.hideViewIfNeedsDouble(double: safeData.popularity, label: self.popularityLabel)
+                    self.hideViewIfNeedsString(string: safeData.status, label: self.statusLabel)
+                    self.hideViewIfNeedsString(string: safeData.title, label: self.titleLabel)
                     self.genresLabel.text = self.genres(genres: safeData.genres ?? [])
                     self.imageMovie.kf.setImage(with: URL(string: "\(Constants.Network.imageURL)\(safeData.posterPath ?? "")"), placeholder: UIImage(named: Constants.Assets.placeholderImage))
-                    self.titleLabel.text = "Title: \(safeData.title ?? "")"
                     self.backgroundImage.kf.setImage(with: URL(string: "\(Constants.Network.imageURL)\(safeData.backdrop ?? "")"))
                     self.hasFavorite = self.hasMovie()
                     if self.hasFavorite {
@@ -79,10 +92,45 @@ class DetailsViewController: UIViewController {
                 }
             }
         }
-        navigationController?.navigationBar.isHidden = false
-        let newBackButton = UIBarButtonItem(title: "Back", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.back(sender:)))
-        self.navigationItem.leftBarButtonItem = newBackButton
-        navigationItem.leftBarButtonItem = newBackButton
+    }
+    func setHiddenLabel (label: UILabel?) {
+        label?.superview?.isHidden = true
+    }
+    func hideViewIfNeedsString (string: String?, label: UILabel?) {
+        if let safeString = string, safeString != "" { // If the value nil then does not appear
+            label?.text = safeString
+        } else {setHiddenLabel(label: label)}
+    }
+    func hideViewIfNeedsInt (integer: Int?, label: UILabel?) {
+        if let safeInteger = integer, safeInteger != 0 { // If the value nil then does not appear
+            label?.text = numberFormat(number: NSNumber(value: safeInteger))
+        } else {setHiddenLabel(label: label)}
+    }
+    func hideViewIfNeedsDouble (double: Double?, label: UILabel?) {
+        if let safeDouble = double, safeDouble != 0.0 { // If the value nil then does not appear
+            label?.text = numberFormat(number: NSNumber(value: safeDouble))
+        } else {setHiddenLabel(label: label)}
+    }
+    func numberFormat (number: NSNumber) -> String {
+        let fmt = NumberFormatter()
+        fmt.numberStyle = .decimal
+        return fmt.string(from: number) ?? "--"
+    }
+    func dateFormat (date: String?) -> String {
+        if let safeDate = date {
+            let dateFormatterGet = DateFormatter()
+            dateFormatterGet.dateFormat = "yyyy-MM-dd"
+
+            let dateFormatterPrint = DateFormatter()
+            dateFormatterPrint.dateFormat = "MMM dd,yyyy"
+
+            if let date = dateFormatterGet.date(from: safeDate) {
+                return dateFormatterPrint.string(from: date)
+            } else {
+               print("There was an error decoding the string")
+            }
+        }
+        return ""
     }
     @objc func back(sender: UIBarButtonItem) {
         if isFavorite, !hasFavorite {
@@ -100,6 +148,29 @@ class DetailsViewController: UIViewController {
         }
         self.navigationController?.navigationBar.isHidden = true
         self.navigationController?.popViewController(animated: true)
+    }
+    func dateString (date: String?) -> String {
+        if let safeString = date, date != "" {
+            var result = ""
+            var tempInt = 0
+            var digit = 1
+            for character in safeString.reversed() {
+                if character == "-" {
+                    result.append("\(tempInt)/")
+                    tempInt = 0
+                    digit = 1
+                } else {
+                    if let digitValue = Int(String(character)) {
+                        tempInt += digitValue*digit
+                        digit *= 10
+                    }
+                }
+            }
+            result.append("\(tempInt)")
+            return result
+        } else {
+            return ""
+        }
     }
     func genres (genres: [Genre]) -> String {
         var allGenres: String = ""

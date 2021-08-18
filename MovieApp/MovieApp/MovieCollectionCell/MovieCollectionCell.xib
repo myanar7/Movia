@@ -18,51 +18,34 @@
                 <rect key="frame" x="0.0" y="0.0" width="184" height="352"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rOU-4k-fSU">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rOU-4k-fSU">
                         <rect key="frame" x="0.0" y="0.0" width="184" height="352"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholderImage" translatesAutoresizingMaskIntoConstraints="NO" id="rlU-Da-KVz">
-                                <rect key="frame" x="0.0" y="0.0" width="184" height="277"/>
+                                <rect key="frame" x="0.0" y="0.0" width="184" height="352"/>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P6f-Dn-HB2">
-                                <rect key="frame" x="0.0" y="277" width="184" height="75"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The Lord Of Rings" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="Ce3-cV-WMD">
-                                        <rect key="frame" x="0.0" y="0.0" width="184" height="75"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="Ce3-cV-WMD" firstAttribute="leading" secondItem="P6f-Dn-HB2" secondAttribute="leading" id="1rr-Ar-9n1"/>
-                                    <constraint firstAttribute="trailing" secondItem="Ce3-cV-WMD" secondAttribute="trailing" id="cUZ-aS-DgR"/>
-                                    <constraint firstAttribute="bottom" secondItem="Ce3-cV-WMD" secondAttribute="bottom" id="fKp-e2-y2f"/>
-                                    <constraint firstItem="Ce3-cV-WMD" firstAttribute="top" secondItem="P6f-Dn-HB2" secondAttribute="top" id="lFS-eS-IYS"/>
-                                </constraints>
-                            </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qwO-VV-4Xn">
-                                <rect key="frame" x="128.5" y="0.0" width="55.5" height="55.5"/>
+                                <rect key="frame" x="113.5" y="0.0" width="70.5" height="70.5"/>
                                 <color key="tintColor" systemColor="systemRedColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="qwO-VV-4Xn" secondAttribute="height" multiplier="1:1" id="e6i-98-JoH"/>
                                 </constraints>
                             </imageView>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YwE-KZ-G9f">
-                                <rect key="frame" x="0.0" y="0.0" width="44.5" height="55.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="56.5" height="70.5"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gradientImage" translatesAutoresizingMaskIntoConstraints="NO" id="2lH-TY-iBu">
-                                        <rect key="frame" x="0.0" y="0.0" width="44.5" height="55.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="56.5" height="70.5"/>
                                     </imageView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="apv-sK-NSa">
-                                        <rect key="frame" x="8" y="-0.5" width="28.5" height="29"/>
+                                        <rect key="frame" x="8" y="-0.5" width="40.5" height="41.5"/>
                                         <color key="tintColor" systemColor="systemYellowColor"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="apv-sK-NSa" secondAttribute="height" multiplier="40:41" id="TNu-sX-dVe"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="oa0-Rk-lh6">
-                                        <rect key="frame" x="0.0" y="37.5" width="44.5" height="18"/>
+                                        <rect key="frame" x="0.0" y="52.5" width="56.5" height="18"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -84,18 +67,16 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <color key="backgroundColor" red="0.098082549869999994" green="0.26281177999999999" blue="0.28423666949999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="P6f-Dn-HB2" firstAttribute="leading" secondItem="rOU-4k-fSU" secondAttribute="leading" id="0G4-7A-R9c"/>
                             <constraint firstItem="YwE-KZ-G9f" firstAttribute="leading" secondItem="rOU-4k-fSU" secondAttribute="leading" id="6vn-L0-9gO"/>
+                            <constraint firstItem="rlU-Da-KVz" firstAttribute="height" secondItem="rOU-4k-fSU" secondAttribute="height" id="Ant-J6-kn4"/>
                             <constraint firstAttribute="trailing" secondItem="qwO-VV-4Xn" secondAttribute="trailing" id="UGZ-nF-a8T"/>
                             <constraint firstItem="rlU-Da-KVz" firstAttribute="top" secondItem="rOU-4k-fSU" secondAttribute="top" id="V3Q-B1-1CJ"/>
-                            <constraint firstAttribute="bottom" secondItem="P6f-Dn-HB2" secondAttribute="bottom" id="Vcb-rO-MiQ"/>
                             <constraint firstItem="qwO-VV-4Xn" firstAttribute="height" secondItem="rlU-Da-KVz" secondAttribute="height" multiplier="0.2" id="WiG-BD-4Vu"/>
                             <constraint firstItem="YwE-KZ-G9f" firstAttribute="top" secondItem="rOU-4k-fSU" secondAttribute="top" id="WnV-nr-mO0"/>
                             <constraint firstAttribute="trailing" secondItem="rlU-Da-KVz" secondAttribute="trailing" id="XuO-Js-573"/>
-                            <constraint firstItem="P6f-Dn-HB2" firstAttribute="top" secondItem="rlU-Da-KVz" secondAttribute="bottom" id="fec-bC-yjL"/>
                             <constraint firstItem="qwO-VV-4Xn" firstAttribute="top" secondItem="rOU-4k-fSU" secondAttribute="top" id="gWX-Ni-hIv"/>
-                            <constraint firstAttribute="trailing" secondItem="P6f-Dn-HB2" secondAttribute="trailing" id="sSu-U9-nsz"/>
                             <constraint firstItem="rlU-Da-KVz" firstAttribute="leading" secondItem="rOU-4k-fSU" secondAttribute="leading" id="xAZ-zp-ymC"/>
                         </constraints>
                     </view>
@@ -104,9 +85,8 @@
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
                 <constraint firstItem="rOU-4k-fSU" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="7Pq-Hw-1A3"/>
-                <constraint firstAttribute="trailing" secondItem="rOU-4k-fSU" secondAttribute="trailing" id="GkQ-li-7Ei"/>
+                <constraint firstItem="rOU-4k-fSU" firstAttribute="width" secondItem="gTV-IL-0wX" secondAttribute="width" id="Dbf-2g-804"/>
                 <constraint firstItem="YwE-KZ-G9f" firstAttribute="height" secondItem="rlU-Da-KVz" secondAttribute="height" multiplier="0.2" id="X1x-nu-Xc9"/>
-                <constraint firstItem="rlU-Da-KVz" firstAttribute="height" secondItem="ZTg-uK-7eu" secondAttribute="height" multiplier="0.9" id="kQc-m5-ltQ"/>
                 <constraint firstItem="rOU-4k-fSU" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="oC5-Kw-4ly"/>
                 <constraint firstAttribute="bottom" secondItem="rOU-4k-fSU" secondAttribute="bottom" id="xjl-dD-e1A"/>
             </constraints>
@@ -116,14 +96,13 @@
                 <outlet property="imageView" destination="rlU-Da-KVz" id="uoi-K4-UVQ"/>
                 <outlet property="imdbBackground" destination="YwE-KZ-G9f" id="W61-D1-Dpe"/>
                 <outlet property="imdbScore" destination="oa0-Rk-lh6" id="Zj2-aT-WVG"/>
-                <outlet property="movieTitle" destination="Ce3-cV-WMD" id="tYv-jl-vjR"/>
                 <outlet property="outerCardView" destination="rOU-4k-fSU" id="uGg-Po-erA"/>
             </connections>
             <point key="canvasLocation" x="201.44927536231884" y="132.58928571428572"/>
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="gradientImage" width="450" height="290"/>
+        <image name="gradientImage" width="112.5" height="112.5"/>
         <image name="placeholderImage" width="107.5" height="150"/>
         <image name="star.fill" catalog="system" width="128" height="116"/>
         <systemColor name="systemRedColor">

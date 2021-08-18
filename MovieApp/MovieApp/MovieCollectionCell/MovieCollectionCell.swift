@@ -20,16 +20,14 @@ class MovieCollectionCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         imdbBackground.layer.cornerRadius = imdbBackground.frame.width/5
-        outerCardView.roundedView()
+        self.layer.cornerRadius = self.frame.width/7
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = outerCardView.bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         outerCardView.insertSubview(blurEffectView, at: 0)
     }
-    func configure(title: String?, posterPath: String?, imdb: Double?, movieID: Int?) {
-        if let safeTitle = title {
-            movieTitle.text = safeTitle
+    func configure(posterPath: String?, imdb: Double?, movieID: Int?) {
             if let safeImdb = imdb {
                 imdbScore.text = String(describing: safeImdb)
             }
@@ -39,7 +37,6 @@ class MovieCollectionCell: UICollectionViewCell {
             } else {
                 imageView.image = UIImage(named: Constants.Assets.placeholderImage)
             }
-        }
     }
     func findMovie (movieID: Int?, completion: (_ data: FavoriteMovie?) -> Void) {
         let request: NSFetchRequest<FavoriteMovie> = FavoriteMovie.fetchRequest()
