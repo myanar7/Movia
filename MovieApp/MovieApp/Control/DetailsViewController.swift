@@ -149,29 +149,6 @@ class DetailsViewController: UIViewController {
         self.navigationController?.navigationBar.isHidden = true
         self.navigationController?.popViewController(animated: true)
     }
-    func dateString (date: String?) -> String {
-        if let safeString = date, date != "" {
-            var result = ""
-            var tempInt = 0
-            var digit = 1
-            for character in safeString.reversed() {
-                if character == "-" {
-                    result.append("\(tempInt)/")
-                    tempInt = 0
-                    digit = 1
-                } else {
-                    if let digitValue = Int(String(character)) {
-                        tempInt += digitValue*digit
-                        digit *= 10
-                    }
-                }
-            }
-            result.append("\(tempInt)")
-            return result
-        } else {
-            return ""
-        }
-    }
     func genres (genres: [Genre]) -> String {
         var allGenres: String = ""
         for genre in genres {

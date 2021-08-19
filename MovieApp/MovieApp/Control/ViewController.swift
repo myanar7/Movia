@@ -119,9 +119,6 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
             }
         }
     }
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        //
-    }
     func configureHeader() {
         isHeaderHidden = !isHeaderHidden
         DispatchQueue.main.async {

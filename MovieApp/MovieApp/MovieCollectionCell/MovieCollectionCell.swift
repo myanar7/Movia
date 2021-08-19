@@ -19,6 +19,9 @@ class MovieCollectionCell: UICollectionViewCell {
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     override func awakeFromNib() {
         super.awakeFromNib()
+        awakeCell()
+    }
+    func awakeCell () {
         imdbBackground.layer.cornerRadius = imdbBackground.frame.width/5
         self.layer.cornerRadius = self.frame.width/7
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
@@ -57,16 +60,5 @@ class MovieCollectionCell: UICollectionViewCell {
                 self.favoriteIcon.image = UIImage()
             }
         }
-    }
-}
-extension UIView {
-    func roundedView() {
-        let maskPath1 = UIBezierPath(roundedRect: bounds,
-            byRoundingCorners: [.topLeft, .topRight],
-            cornerRadii: CGSize(width: 15, height: 15))
-        let maskLayer1 = CAShapeLayer()
-        maskLayer1.frame = bounds
-        maskLayer1.path = maskPath1.cgPath
-        layer.mask = maskLayer1
     }
 }
